@@ -54,4 +54,13 @@ export class ManageProduct implements Manage<Product> {
             console.log(`STT: ${index + 1}, id: ${item.productID}, ${item.productName}, sl: ${item.productAmount}, gia: ${item.productPrice}`)
         })
     }
+
+    findProductByID(id: number): Product| undefined {
+        let index = this.findByID(id);
+        if (index == -1) {
+            return undefined;
+        } else {
+            return this.listProduct[index]
+        }
+    }
 }

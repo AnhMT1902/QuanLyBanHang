@@ -1,17 +1,12 @@
-import {ManageHistoryLogIn} from "./Manage/ManageHistoryLogIn";
-import {HistoryLogin} from "./Model/HistoryLogin";
-import {User} from "./Model/User";
+import {ManageCart} from "./Manage/ManageCart";
 import {Product} from "./Model/Product";
 
-let listHistoryLogIn = new ManageHistoryLogIn();
-let user = new User("minh anh", "123", true)
-
-user.add(new Product(12, "ip", 1,2))
-let history = new HistoryLogin(user);
-listHistoryLogIn.addHistoryLogIn(history)
-listHistoryLogIn.listHistoryLogIn.forEach((item)=>{
-    console.log(item.card)
-})
-listHistoryLogIn.listHistoryLogIn.forEach((item,index)=>{
-    console.log((index + 1) +" "+ item.card)
-})
+let cart: ManageCart = new ManageCart("minh anh", "123", true)
+function f(cart) {
+    cart._cart.push(new Product(1, "a", 1,2));
+    cart._cart.push(new Product(2, "aaa", 1,2));
+    cart._cart.push(new Product(3, "ab", 1,2));
+    return cart;
+}
+f(cart)
+console.log(cart)

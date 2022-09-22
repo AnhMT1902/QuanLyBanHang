@@ -1,27 +1,27 @@
-import {Admin} from "../Model/Admin";
-import {ManageUser} from "../Manage/ManageUser";
-import {Product} from "../Model/Product";
-import {ManageProduct} from "../Manage/ManageProduct";
-import {HistoryLogin} from "../Model/HistoryLogin";
-import {ManageHistoryLogIn} from "../Manage/ManageHistoryLogIn";
-import {User} from "../Model/User";
-import {ManageCart} from "../Manage/ManageCart";
-import {ManageHistoryBuyProduct} from "../Manage/ManageHistoryBuyProduct";
-
-let inp = require('readline-sync');
-let admin = new Admin();
-let listUser = new ManageUser();
-let listProduct = new ManageProduct();
-let listHistoryLogin = new ManageHistoryLogIn();
-let listHistoryBuyProduct = new ManageHistoryBuyProduct();
-let cartUser: ManageCart;
-let choice: number;
-let temp: number = 3;
-
+"use strict";
+exports.__esModule = true;
+var Admin_1 = require("../Model/Admin");
+var ManageUser_1 = require("../Manage/ManageUser");
+var Product_1 = require("../Model/Product");
+var ManageProduct_1 = require("../Manage/ManageProduct");
+var HistoryLogin_1 = require("../Model/HistoryLogin");
+var ManageHistoryLogIn_1 = require("../Manage/ManageHistoryLogIn");
+var User_1 = require("../Model/User");
+var ManageCart_1 = require("../Manage/ManageCart");
+var ManageHistoryBuyProduct_1 = require("../Manage/ManageHistoryBuyProduct");
+var inp = require('readline-sync');
+var admin = new Admin_1.Admin();
+var listUser = new ManageUser_1.ManageUser();
+var listProduct = new ManageProduct_1.ManageProduct();
+var listHistoryLogin = new ManageHistoryLogIn_1.ManageHistoryLogIn();
+var listHistoryBuyProduct = new ManageHistoryBuyProduct_1.ManageHistoryBuyProduct();
+var cartUser;
+var choice;
+var temp = 3;
 function main() {
     while (choice != 0) {
         menuLogIn();
-        choice = +inp.question("Lua chon cua ban: ")
+        choice = +inp.question("Lua chon cua ban: ");
         switch (choice) {
             case 1:
                 logInAdmin();
@@ -32,13 +32,10 @@ function main() {
         }
     }
 }
-
 main();
-
 function menuLogIn() {
     console.log("----Ban phai dang nhap----\n1. Dang nhap Admin\n2. Dang nhap User\n0. Thoat");
 }
-
 function logInAdmin() {
     if (checkLoginAdmin() == true) {
         while (choice != 4) {
@@ -58,38 +55,36 @@ function logInAdmin() {
         }
     }
 }
-
 function menuAdmin() {
-    console.log("----MENU ADMIN----\n1. Quan ly User\n2. Quan ly san pham\n3. Xem lich su dang nhap cua User\n4. Dang xuat")
+    console.log("----MENU ADMIN----\n1. Quan ly User\n2. Quan ly san pham\n3. Xem lich su dang nhap cua User\n4. Dang xuat");
 }
-
 function checkLoginAdmin() {
-    let useName = inp.question("useName: ")
-    let password = inp.question("password: ")
+    var useName = inp.question("useName: ");
+    var password = inp.question("password: ");
     if (admin.useName == useName && admin.password == password) {
         return true;
-    } else {
-        console.log("----thong tin tai khoan chua chinh xac, vui long dang nhap lai----")
+    }
+    else {
+        console.log("----thong tin tai khoan chua chinh xac, vui long dang nhap lai----");
         return false;
     }
 }
-
 function menuManageUser() {
     while (choice != 4) {
         showMenuManageUser();
-        choice = +inp.question("nhap lua chon cua ban: ")
+        choice = +inp.question("nhap lua chon cua ban: ");
         switch (choice) {
             case 1:
                 listUser.showAll();
                 break;
             case 2:
                 listUser.showAll();
-                let lockUseName: string = inp.question("nhap useName: ");
+                var lockUseName = inp.question("nhap useName: ");
                 listUser.lockUser(lockUseName);
                 break;
             case 3:
                 listUser.showAll();
-                let useName = inp.question("nhap useName: ")
+                var useName = inp.question("nhap useName: ");
                 listUser.unLockUser(useName);
                 break;
             case 4:
@@ -98,11 +93,10 @@ function menuManageUser() {
         }
     }
 }
-
 function menuManageProduct() {
     while (choice != 0) {
-        showMenuManageProduct()
-        choice = +inp.question("lua chon cua ban: ")
+        showMenuManageProduct();
+        choice = +inp.question("lua chon cua ban: ");
         switch (choice) {
             case 1:
                 addProduct();
@@ -122,44 +116,39 @@ function menuManageProduct() {
         }
     }
 }
-
 function showMenuManageUser() {
-    console.log("----MANAGE USER----\n1. Danh sach User\n2. Khoa tai khoan \n3. Mo tai khoan\n4. Quay lai")
+    console.log("----MANAGE USER----\n1. Danh sach User\n2. Khoa tai khoan \n3. Mo tai khoan\n4. Quay lai");
 }
-
 function showMenuManageProduct() {
-    console.log("----MANAGE PRODUCT----\n1. Them\n2. Hien thi tat ca san pham\n3. Tim san pham\n4. Sua sp\n5. Xoa sp\n0. Quay lai")
+    console.log("----MANAGE PRODUCT----\n1. Them\n2. Hien thi tat ca san pham\n3. Tim san pham\n4. Sua sp\n5. Xoa sp\n0. Quay lai");
 }
-
 function addProduct() {
-    let id = +inp.question("id san pham: ");
-    let name = inp.question("ten san pham: ");
-    let amount = +inp.question("so luong san pham: ");
-    let price = +inp.question("gia san pham: ");
-    let temp = 0;
-    for (let i = 0; i < listProduct.listProduct.length; i++) {
+    var id = +inp.question("id san pham: ");
+    var name = inp.question("ten san pham: ");
+    var amount = +inp.question("so luong san pham: ");
+    var price = +inp.question("gia san pham: ");
+    var temp = 0;
+    for (var i = 0; i < listProduct.listProduct.length; i++) {
         if (listProduct.listProduct[i].productID == id) {
             listProduct.listProduct[i].productAmount += amount;
             temp++;
         }
     }
     if (temp == 0) {
-        listProduct.add(new Product(id, name, amount, price))
+        listProduct.add(new Product_1.Product(id, name, amount, price));
     }
 }
-
 function findByName() {
-    let name = inp.question("nhap ten sp can tim: ")
+    var name = inp.question("nhap ten sp can tim: ");
     listProduct.findByName(name);
 }
-
 function updateProduct() {
-    let id = +inp.question("nhap id sp can sua: ")
-    let index = listProduct.findByID(id);
+    var id = +inp.question("nhap id sp can sua: ");
+    var index = listProduct.findByID(id);
     console.log("-----Bo trong neu khong muon thay doi-----");
-    let name = inp.question("nhap ten moi: ");
-    let amount = +inp.question("nhap lai so luong: ");
-    let price = +inp.question("nhap gia moi: ");
+    var name = inp.question("nhap ten moi: ");
+    var amount = +inp.question("nhap lai so luong: ");
+    var price = +inp.question("nhap gia moi: ");
     if (name != "") {
         listProduct.listProduct[index].productName = name;
     }
@@ -170,29 +159,27 @@ function updateProduct() {
         listProduct.listProduct[index].productPrice = price;
     }
 }
-
 function showProduct() {
     listProduct.showAllProduct();
 }
-
 function removeProduct() {
     showProduct();
-    let id = inp.question("nhap id can xoa: ");
+    var id = inp.question("nhap id can xoa: ");
     listProduct.removeByID(id);
 }
-
 function logInUser() {
-    let useName = inp.question("useName: ");
-    let password = inp.question("password: ");
+    var useName = inp.question("useName: ");
+    var password = inp.question("password: ");
     logInHistory(useName);
     if (checkLoginUser(useName, password) == true) {
         if (listUser.listUser[listUser.findByUserName(useName)].status == false) {
-            console.log("-----Tai khoan bi khoa, vui long lien he ADMIN de mo-----")
-        } else {
+            console.log("-----Tai khoan bi khoa, vui long lien he ADMIN de mo-----");
+        }
+        else {
             while (choice != 4) {
                 showShoppingMenu();
                 choice = +inp.question("lua chon cua ban: ");
-                cartUser = new ManageCart(useName, password, true);
+                cartUser = new ManageCart_1.ManageCart(useName, password, true);
                 //1. Mua sam 2. Gio hang cua toi 3. Lich su 4. Dang xuat;
                 switch (choice) {
                     case 1:
@@ -207,13 +194,12 @@ function logInUser() {
         }
     }
 }
-
-function checkLoginUser(useName: string, password: string) {
-    let flag = 0;
-    for (let i = 0; i < listUser.listUser.length; i++) {
+function checkLoginUser(useName, password) {
+    var flag = 0;
+    for (var i = 0; i < listUser.listUser.length; i++) {
         if (listUser.listUser[i].useName == useName && listUser.listUser[i].password == password) {
             temp = 3;
-            flag++
+            flag++;
             return true;
         }
     }
@@ -224,31 +210,27 @@ function checkLoginUser(useName: string, password: string) {
         listUser.listUser[listUser.findByUserName(useName)].status = false;
     }
 }
-
 function showShoppingMenu() {
-    console.log("----MENU SHOPPING----\n1. Mua sam\n2. Gio hang cua toi\n3. Lich su\n4. Dang xuat")
+    console.log("----MENU SHOPPING----\n1. Mua sam\n2. Gio hang cua toi\n3. Lich su\n4. Dang xuat");
 }
-
-function logInHistory(useName: string) {
-    for (let i = 0; i < listUser.listUser.length; i++) {
+function logInHistory(useName) {
+    for (var i = 0; i < listUser.listUser.length; i++) {
         if (listUser.listUser[i].useName == useName) {
-            let user: User = listUser.listUser[i];
-            let history = new HistoryLogin(user);
-            listHistoryLogin.listHistoryLogIn.push(history);
+            var user = listUser.listUser[i];
+            var history_1 = new HistoryLogin_1.HistoryLogin(user);
+            listHistoryLogin.listHistoryLogIn.push(history_1);
         }
     }
 }
-
 function showHistoryLogIn() {
-    listHistoryLogin.listHistoryLogIn.forEach((item, index) => {
+    listHistoryLogin.listHistoryLogIn.forEach(function (item, index) {
         console.log(index + 1);
         console.log(item.card);
     });
 }
-
 function logInOrRegister() {
     while (choice != 3) {
-        console.log("1. Dang nhap\n2. Dang ky\n3. Quay lai")
+        console.log("1. Dang nhap\n2. Dang ky\n3. Quay lai");
         choice = +inp.question("lua chon cua ban: ");
         switch (choice) {
             case 1:
@@ -256,29 +238,27 @@ function logInOrRegister() {
                 break;
             case 2:
                 registerUser();
-                break
+                break;
             case 3:
                 menuLogIn();
                 break;
         }
     }
 }
-
 function registerUser() {
-    let flag: number = 0;
-    let useName: string = inp.question("ten dang nhap moi: ");
+    var flag = 0;
+    var useName = inp.question("ten dang nhap moi: ");
     if (listUser.findByUserName(useName) != -1) {
-        flag++
-        console.log("----Ten dang nhap da ton tai, vui long chon ten dang nhap khac----")
+        flag++;
+        console.log("----Ten dang nhap da ton tai, vui long chon ten dang nhap khac----");
     }
     if (flag == 0) {
-        let password: string = inp.question("mat khau moi: ");
-        listUser.addUser(new User(useName, password, true));
+        var password = inp.question("mat khau moi: ");
+        listUser.addUser(new User_1.User(useName, password, true));
         console.log("----Dang ky thanh cong----");
     }
 }
-
-function buyProduct(carUser: ManageCart) {
+function buyProduct(carUser) {
     while (choice != 0) {
         console.log("----List Shopping----\n1. Hien thi danh sach san pham\n2. Sap xep theo gia\n3. Tim san pham\n4. Tim theo khoang gia\n0. Quay lai");
         choice = +inp.question("lua chon cua ban: ");
@@ -293,7 +273,7 @@ function buyProduct(carUser: ManageCart) {
                             buyBuyProduct(cartUser);
                             break;
                     }
-                } while (choice != 2)
+                } while (choice != 2);
                 break;
             case 2:
                 do {
@@ -305,11 +285,11 @@ function buyProduct(carUser: ManageCart) {
                             buyBuyProduct(cartUser);
                             break;
                     }
-                } while (choice != 2)
+                } while (choice != 2);
                 break;
             case 3:
                 do {
-                    let nameProduct = inp.question("nhap ten san pham ban muon tim: ");
+                    var nameProduct = inp.question("nhap ten san pham ban muon tim: ");
                     showProductByName(nameProduct);
                     console.log("--------------\n1. Them vao gio hang\n2. Quay lai");
                     choice = +inp.question("lua chon cua ban: ");
@@ -318,50 +298,51 @@ function buyProduct(carUser: ManageCart) {
                             buyBuyProduct(cartUser);
                             break;
                     }
-                } while (choice != 2)
+                } while (choice != 2);
                 break;
         }
     }
 }
-
-function buyBuyProduct(cartUser: ManageCart) {
-    let id = +inp.question("nhap id san pham: ");
-    let amount = +inp.question("so luong muon mua: ");
-    let product: Product = listProduct.findProductByID(id);
+function buyBuyProduct(cartUser) {
+    var id = +inp.question("nhap id san pham: ");
+    var amount = +inp.question("so luong muon mua: ");
+    var product = listProduct.findProductByID(id);
     if (product == undefined) {
         console.log("id khong dung, vui long nhap lai");
-    } else {
+    }
+    else {
         if (amount <= product.productAmount) {
-            let flag: number = 0;
-            for (let i = 0; i < cartUser._cart.length; i++) {
+            var flag = 0;
+            for (var i = 0; i < cartUser._cart.length; i++) {
                 if (cartUser._cart[i].productID == id) {
                     flag++;
-                    if (cartUser._cart[i].productAmount + amount > product.productAmount){
-                        console.log(`Ban chi co the them duoc nhieu nhat ${product.productAmount - cartUser._cart[i].productAmount} san pham nay nua thui :v`)
-                    } else {
+                    if (cartUser._cart[i].productAmount + amount > product.productAmount) {
+                        console.log("Ban chi co the them duoc nhieu nhat ".concat(product.productAmount - cartUser._cart[i].productAmount, " san pham nay nua thui :v"));
+                    }
+                    else {
                         cartUser._cart[i].productAmount += amount;
-                        console.log("----Them vao gio hang thanh cong----")
+                        console.log("----Them vao gio hang thanh cong----");
                     }
                 }
             }
             if (flag == 0) {
-                cartUser.add(new Product(id, product.productName, amount, product.productPrice));
+                cartUser.add(new Product_1.Product(id, product.productName, amount, product.productPrice));
                 console.log("----Them vao gio hang thanh cong----");
             }
-        } else {
+        }
+        else {
             console.log('----So luong khong du,vui long nhap lai----');
         }
     }
 }
-
 function SortProductByPrice() {
-    let sortProductByPrice: Product[] = []
-    let temp: any;
-    listProduct.listProduct.forEach((item) => {
+    var sortProductByPrice = [];
+    var temp;
+    listProduct.listProduct.forEach(function (item) {
         sortProductByPrice.push(item);
     });
-    for (let i = 0; i < sortProductByPrice.length; i++) {
-        for (let j = i + 1; j < sortProductByPrice.length; j++) {
+    for (var i = 0; i < sortProductByPrice.length; i++) {
+        for (var j = i + 1; j < sortProductByPrice.length; j++) {
             if (sortProductByPrice[i].productPrice > sortProductByPrice[j].productPrice) {
                 temp = sortProductByPrice[i];
                 sortProductByPrice[i] = sortProductByPrice[j];
@@ -371,30 +352,27 @@ function SortProductByPrice() {
     }
     return sortProductByPrice;
 }
-
 function showSortProductByPrice() {
-    let arraySortProduct = SortProductByPrice();
-    arraySortProduct.forEach((item, index) => {
-        console.log(`STT: ${index + 1}, id: ${item.productID}, ${item.productName}, sl: ${item.productAmount}, gia: ${item.productPrice}`)
-    })
+    var arraySortProduct = SortProductByPrice();
+    arraySortProduct.forEach(function (item, index) {
+        console.log("STT: ".concat(index + 1, ", id: ").concat(item.productID, ", ").concat(item.productName, ", sl: ").concat(item.productAmount, ", gia: ").concat(item.productPrice));
+    });
 }
-
 function showProductByName(name) {
     findProductByName(name);
 }
-
 function findProductByName(name) {
-    let arrProductByName = listProduct.findByName(name);
+    var arrProductByName = listProduct.findByName(name);
     if (arrProductByName.length == 0) {
-        console.log("khong tim thay")
-    } else {
-        arrProductByName.forEach((item, index) => {
-            console.log(`STT: ${index + 1}, id: ${item.productID}, ${item.productName}, sl: ${item.productAmount}, gia: ${item.productPrice}`)
-        })
+        console.log("khong tim thay");
+    }
+    else {
+        arrProductByName.forEach(function (item, index) {
+            console.log("STT: ".concat(index + 1, ", id: ").concat(item.productID, ", ").concat(item.productName, ", sl: ").concat(item.productAmount, ", gia: ").concat(item.productPrice));
+        });
     }
 }
-
-function showCart(cartUser: ManageCart) {
+function showCart(cartUser) {
     console.log(cartUser._cart);
     // cart._cart.forEach(()=>{
     //    cart._cart.forEach((item, index) => {
@@ -402,8 +380,7 @@ function showCart(cartUser: ManageCart) {
     //     })
     // })
 }
-
 function cart(useName, password) {
-    let cartUser: ManageCart = new ManageCart(useName, password, true);
+    var cartUser = new ManageCart_1.ManageCart(useName, password, true);
     return cartUser;
 }

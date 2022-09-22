@@ -27,6 +27,11 @@ export class ManageUser {
         return -1;
     }
 
+    findUseName(useName: string) {
+        let index = this.findByUserName(useName);
+        return this.listUser[index];
+    }
+
     lockUser(useName: string) {
         let index = this.findByUserName(useName);
         this.listUser[index].status = false;
