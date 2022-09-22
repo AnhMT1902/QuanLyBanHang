@@ -2,10 +2,10 @@ import {Product} from "./Product";
 import {ManageUser} from "../Manage/ManageUser";
 import {ManageCart} from "../Manage/ManageCart";
 
-export class User extends ManageCart {
+export class User extends ManageCart{
     private _useName: string;
     private _password: string;
-    private _status: boolean;
+    private _status: boolean
     cart: Product[] = [];
 
     constructor(useName: string, password: string, status: boolean) {

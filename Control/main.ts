@@ -2,13 +2,17 @@ import {Admin} from "../Model/Admin";
 import {ManageUser} from "../Manage/ManageUser";
 import {Product} from "../Model/Product";
 import {ManageProduct} from "../Manage/ManageProduct";
+import {HistoryLogin} from "../Model/HistoryLogin";
+import {ManageHistoryLogIn} from "../Manage/ManageHistoryLogIn";
+import {User} from "../Model/User";
 
 let inp = require('readline-sync');
 let admin = new Admin();
 let listUser = new ManageUser();
 let listProduct = new ManageProduct();
+let listHistoryLogin = new ManageHistoryLogIn();
 let choice: number;
-let temp: number = 4;
+let temp: number = 3;
 
 function main() {
     while (choice != 0) {
@@ -19,7 +23,7 @@ function main() {
                 logInAdmin();
                 break;
             case 2:
-                logInUser();
+                logInOrRegister();
                 break;
         }
     }
@@ -33,7 +37,7 @@ function menuLogIn() {
 
 function logInAdmin() {
     if (checkLoginAdmin() == true) {
-        while (choice != 3) {
+        while (choice != 4) {
             menuAdmin();
             choice = +inp.question("lua chon cua ban: ");
             switch (choice) {
@@ -43,13 +47,16 @@ function logInAdmin() {
                 case 2:
                     menuManageProduct();
                     break;
+                case 3:
+                    showHistoryLogIn();
+                    break;
             }
         }
     }
 }
 
 function menuAdmin() {
-    console.log("----MENU ADMIN----\n1. Quan ly User\n2. Quan ly san pham\n3. Dang xuat")
+    console.log("----MENU ADMIN----\n1. Quan ly User\n2. Quan ly san pham\n3. Xem lich su dang nhap cua User\n4. Dang xuat")
 }
 
 function checkLoginAdmin() {
@@ -173,14 +180,20 @@ function removeProduct() {
 function logInUser() {
     let useName = inp.question("useName: ");
     let password = inp.question("password: ");
-
+    logInHistory(useName);
     if (checkLoginUser(useName, password) == true) {
         if (listUser.listUser[listUser.findByUserName(useName)].status == false) {
             console.log("-----Tai khoan bi khoa, vui long lien he ADMIN de mo-----")
         } else {
-            logInHistory();
-            while (choice != 0) {
+            while (choice != 4) {
                 showShoppingMenu();
+                choice = +inp.question("lua chon cua ban: ");
+                //1. Mua sam 2. Gio hang cua toi 3. Lich su 4. Dang xuat;
+                switch (choice) {
+                    case 1:
+                        buyProduct();
+                        break;
+                }
                 // viết tiếp ở đây
             }
         }
@@ -188,24 +201,78 @@ function logInUser() {
 }
 
 function checkLoginUser(useName: string, password: string) {
+    let flag = 0;
     for (let i = 0; i < listUser.listUser.length; i++) {
         if (listUser.listUser[i].useName == useName && listUser.listUser[i].password == password) {
-            temp = 4;
+            temp = 3;
+            flag++
             return true;
-        } else {
-            temp--;
-            console.log("----Ten dang nhap hoac mat khau khong chinh xac----")
         }
     }
-    if (temp == 0) {
+    if (flag == 0) {
+        temp--;
+    }
+    if (temp <= 0) {
         listUser.listUser[listUser.findByUserName(useName)].status = false;
     }
 }
 
 function showShoppingMenu() {
-    console.log("----MENU SHOPPING----\n1. Mua sam\n2. Gio hang cua toi\n3. Lich su\n0. Thoat")
+    console.log("----MENU SHOPPING----\n1. Mua sam\n2. Gio hang cua toi\n3. Lich su\n4. Dang xuat")
 }
 
-function logInHistory() {
+function logInHistory(useName: string) {
+    for (let i = 0; i < listUser.listUser.length; i++) {
+        if (listUser.listUser[i].useName == useName) {
+            let user: User = listUser.listUser[i];
+            let history = new HistoryLogin(user);
+            listHistoryLogin.listHistoryLogIn.push(history);
+        }
+    }
+}
 
+function showHistoryLogIn() {
+    listHistoryLogin.listHistoryLogIn.forEach((item, index) => {
+        console.log(index + 1);
+        console.log(item.card);
+    });
+}
+
+function logInOrRegister() {
+    while (choice != 3) {
+        console.log("1. Dang nhap\n2. Dang ky\n3. Quay lai")
+        choice = +inp.question("lua chon cua ban: ");
+        switch (choice) {
+            case 1:
+                logInUser();
+                break;
+            case 2:
+                registerUser();
+                break
+            case 3:
+                menuLogIn();
+                break;
+        }
+    }
+}
+
+function registerUser() {
+    let useName: string = inp.question("ten dang nhap moi: ");
+    let password: string = inp.question("mat khau moi: ");
+    if (listUser.findByUserName(useName) != -1) {
+        console.log("----Ten dang nhap da ton tai, vui long chon ten dang nhap khac----")
+    } else {
+        listUser.addUser(new User(useName, password, true));
+        console.log("----Dang ky thanh cong----");
+    }
+}
+
+function buyProduct() {
+    while (choice != 0) {
+        listProduct.showAllProduct();
+        console.log("0. Quay lai");
+        let id = +inp.question("nhap id san pham: ");
+        let amount = +inp.question("so luong muon mua: ");
+
+    }
 }

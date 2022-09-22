@@ -1,5 +1,9 @@
 import {User} from "./User";
 
-class HistoryLogin{
+export class HistoryLogin{
     card: User;
+
+    constructor(card: User) {
+        this.card = card;
+    }
 }
